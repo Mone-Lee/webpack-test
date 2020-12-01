@@ -1,10 +1,14 @@
 // console.log('search.js')
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './search.less';
+import logo from './images/icon_star.png';
 
 class Search extends React.Component {
     render() {
-        return <div>Search Txt</div>
+        return <div className="search-text">
+            Search Txt<img src={ logo } />
+        </div>
     }
 }
 
