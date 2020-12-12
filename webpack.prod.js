@@ -6,10 +6,12 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 const setMAP = () => {
     const entry = {};
     const htmlWebpackPlugins = [];
+    const htmlWebpackExternalsPlugins = [];
 
     const entryFiles = glob.sync(path.join(__dirname, './src/*/index.js'));
     Object.keys(entryFiles).map((index) => {
@@ -22,7 +24,7 @@ const setMAP = () => {
             new HtmlWebpackPlugin({
                 template: path.join(__dirname, `src/${pageName}/index.html`),
                 filename: `${pageName}.html`,
-                chunks: [pageName],
+                chunks: ['common', pageName],
                 inject: true,   // 把chunk自动注入html中
                 minify: {
                     html5: true,
@@ -34,16 +36,34 @@ const setMAP = () => {
                 }
             })
         )
+
+        htmlWebpackExternalsPlugins.push(
+            new HtmlWebpackExternalsPlugin({
+                externals: [
+                    {
+                        module: 'react',
+                        entry: 'https://now8.gtimg.com/now/lib/16.2.0/react.min.js',
+                        global: 'React',
+                    },
+                    {
+                        module: 'react-dom',
+                        entry: 'https://now8.gtimg.com/now/lib/16.2.0/react-dom.min.js',
+                        global: 'ReactDOM',
+                    },
+                ],
+                files: `${pageName}.html`
+            })
+        )
     })
 
     return {
         entry,
-        htmlWebpackPlugins
+        htmlWebpackPlugins,
+        htmlWebpackExternalsPlugins
     }
 }
 
-const { entry, htmlWebpackPlugins } = setMAP();
-
+const { entry, htmlWebpackPlugins, htmlWebpackExternalsPlugins } = setMAP();
 
 module.exports = {
     entry: entry,
@@ -118,7 +138,21 @@ module.exports = {
             cssProcessor: require('cssnano')
         }),
         new CleanWebpackPlugin(),
-        new HTMLInlineCSSWebpackPlugin()
-    ].concat(htmlWebpackPlugins),
+        new HTMLInlineCSSWebpackPlugin(),
+    ]
+    .concat(htmlWebpackPlugins)
+    .concat(htmlWebpackExternalsPlugins),
+    optimization: {
+        splitChunks: {
+            minSize: 0,
+            cacheGroups: {
+                commons: {
+                    name: 'common',
+                    chunks: 'all',
+                    minChunks: 2
+                }
+            }
+        }
+    },
     devtool: 'inline-source-map'
 }
