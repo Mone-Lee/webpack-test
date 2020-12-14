@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import largeNumberWebpackBuild from 'large-number-webpack-build';
 import './search.less';
 import '../../common';
 import logo from '../images/icon_star.png';
@@ -23,12 +24,16 @@ class Search extends React.Component {
 
 	render() {
 		const { Text } = this.state;
-		return <div className="search-text">
-			{
-				Text && <Text />
-			}
-			Search Txt<img src={ logo } onClick={() => this.loadComponentDynamic()} />
-		</div>
+		const addResult = largeNumberWebpackBuild('9999', '1');
+		return (
+			<div className="search-text">
+				{
+					Text && <Text />
+				}
+				Search Txt<img src={ logo } onClick={() => this.loadComponentDynamic()} />
+				<p>{ addResult }</p>
+			</div>
+		)
 	}
 }
 
