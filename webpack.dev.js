@@ -3,6 +3,7 @@ const glob = require('glob');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const setMAP = () => {
 	const entry = {};
@@ -45,7 +46,7 @@ module.exports = {
 	entry: entry,
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: '[name]_[chunkhash:8].js'
+		filename: '[name].js'
 	},
 	mode: 'development',
 	module: {
@@ -88,7 +89,8 @@ module.exports = {
 	},
 	plugins: [
 		new webpack.HotModuleReplacementPlugin(),
-		new CleanWebpackPlugin()
+		new CleanWebpackPlugin(),
+		new FriendlyErrorsWebpackPlugin()
 	].concat(htmlWebpackPlugins),
 	devServer: {
 		contentBase: './dist',

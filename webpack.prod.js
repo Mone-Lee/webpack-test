@@ -6,7 +6,8 @@ const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").default;
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
+const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
 
 const setMAP = () => {
 	const entry = {};
@@ -142,6 +143,7 @@ module.exports = {
 		}),
 		new CleanWebpackPlugin(),
 		new HTMLInlineCSSWebpackPlugin(),
+		new FriendlyErrorsWebpackPlugin()
 	]
 	.concat(htmlWebpackPlugins)
 	.concat(htmlWebpackExternalsPlugins),
