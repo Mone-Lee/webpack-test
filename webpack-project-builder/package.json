@@ -1,0 +1,49 @@
+{
+  "name": "webpack-project-builder",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "istanbul cover ./node_modules/.bin/_mocha",
+    "eslint": "eslint ./lib --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "assert": "^2.0.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "glob-all": "^3.2.1",
+    "istanbul": "^0.4.5",
+    "mocha": "^8.2.1",
+    "rimraf": "^3.0.2"
+  },
+  "dependencies": {
+    "autoprefixer": "^8.0.0",
+    "babel-eslint": "^10.1.0",
+    "babel-loader": "^8.2.2",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^5.0.1",
+    "cssnano": "^4.1.10",
+    "eslint-loader": "^4.0.2",
+    "express": "^4.17.1",
+    "file-loader": "^6.2.0",
+    "friendly-errors-webpack-plugin": "^1.7.0",
+    "html-inline-css-webpack-plugin": "^1.9.1",
+    "html-webpack-externals-plugin": "^3.8.0",
+    "html-webpack-plugin": "^4.5.0",
+    "less": "^3.12.2",
+    "less-loader": "^7.1.0",
+    "mini-css-extract-plugin": "^1.3.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.4",
+    "postcss-loader": "^4.1.0",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
+    "webpack-merge": "^5.7.0",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
+  }
+}
