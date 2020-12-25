@@ -1,10 +1,13 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import largeNumberWebpackBuild from 'large-number-webpack-build';
-import './search.less';
-import '../../common';
-import logo from '../images/icon_star.png';
-import bg from '../images/bg.jpg';
+// import React from 'react';
+// import largeNumberWebpackBuild from 'large-number-webpack-build';
+// import './search.less';
+// import '../../common';
+// import logo from '../images/icon_star.png';
+const React = require('react');
+const largeNumberWebpackBuild = require('large-number-webpack-build');
+require('./search.less');
+require('../../common');
+const logo = require('../images/icon_star.png');
 
 class Search extends React.Component {
 	constructor() {
@@ -33,13 +36,9 @@ class Search extends React.Component {
 				}
 				Search Txt<img src={ logo } onClick={() => this.loadComponentDynamic()} />
 				<p>{ addResult }</p>
-				<img src={ bg } />
 			</div>
 		)
 	}
 }
 
-ReactDOM.render(
-	<Search />,
-	document.getElementById('root')
-)
+module.exports = <Search />;

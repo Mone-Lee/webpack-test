@@ -8,6 +8,16 @@ const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin").def
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
+const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+const PurgeCSSPlugin = require('purgecss-webpack-plugin')
+
+const PATHS = {
+  src: path.join(__dirname, 'src')
+}
+
+const smp = new SpeedMeasurePlugin();
 
 const setMAP = () => {
 	const entry = {};
@@ -77,8 +87,9 @@ module.exports = {
 		rules: [
 			{
 				test: /\.js$/,
+				include: path.resolve('src'),
 				use: [
-					'babel-loader',
+					'babel-loader?cacheDirectory=true',
 					// 'eslint-loader'
 				]
 			},
@@ -117,7 +128,30 @@ module.exports = {
 						options: {
 							name: '[name]_[hash:8].[ext]'
 						}
-					}
+					},
+					{
+						loader: 'image-webpack-loader',
+						options: {
+							mozjpeg: {
+								progressive: true,
+							},
+							// optipng.enabled: false will disable optipng
+							optipng: {
+								enabled: false,
+							},
+							pngquant: {
+								quality: [0.65, 0.90],
+								speed: 4
+							},
+							gifsicle: {
+								interlaced: false,
+							},
+							// the webp option will enable WEBP
+							webp: {
+								quality: 75
+							}
+						}
+					},
 				]
 			},
 			{
@@ -142,22 +176,31 @@ module.exports = {
 			cssProcessor: require('cssnano')
 		}),
 		new CleanWebpackPlugin(),
-		new HTMLInlineCSSWebpackPlugin(),
-		new FriendlyErrorsWebpackPlugin()
+		// new HTMLInlineCSSWebpackPlugin(),
+		new FriendlyErrorsWebpackPlugin(),
+		// new BundleAnalyzerPlugin(),
+		new HardSourceWebpackPlugin(),
+		new PurgeCSSPlugin({
+      paths: glob.sync(`${PATHS.src}/**/*`,  { nodir: true }),
+    }),
 	]
 	.concat(htmlWebpackPlugins)
 	.concat(htmlWebpackExternalsPlugins),
-	optimization: {
-		splitChunks: {
-			minSize: 0,
-			cacheGroups: {
-				commons: {
-					name: 'common',
-					chunks: 'all',
-					minChunks: 2
-				}
-			}
-		}
+	// optimization: {
+	// 	splitChunks: {
+	// 		minSize: 0,
+	// 		cacheGroups: {
+	// 			commons: {
+	// 				name: 'common',
+	// 				chunks: 'all',
+	// 				minChunks: 2
+	// 			}
+	// 		}
+	// 	}
+	// },
+	resolve: {
+		extensions: ['.js'],
+		mainFields: ['main']
 	},
 	devtool: 'inline-source-map'
 }

@@ -4,7 +4,6 @@ import largeNumberWebpackBuild from 'large-number-webpack-build';
 import './search.less';
 import '../../common';
 import logo from '../images/icon_star.png';
-import bg from '../images/bg.jpg';
 
 class Search extends React.Component {
 	constructor() {
@@ -33,7 +32,6 @@ class Search extends React.Component {
 				}
 				Search Txt<img src={ logo } onClick={() => this.loadComponentDynamic()} />
 				<p>{ addResult }</p>
-				<img src={ bg } />
 			</div>
 		)
 	}
