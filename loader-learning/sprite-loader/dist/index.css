@@ -1,0 +1,7 @@
+.img1 {
+  background: url("sprite.png");width:28px;height:28px;background-position:-0px -120px;
+}
+
+.img2 {
+  background: url("sprite.png");width:900px;height:120px;background-position:-0px -0px;
+}
