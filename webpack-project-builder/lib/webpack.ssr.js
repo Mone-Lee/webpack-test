@@ -1,6 +1,6 @@
 const path = require('path');
 const glob = require('glob');
-const merge = require('webpack-merge');
+const { merge } = require('webpack-merge');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
 const cssnano = require('cssnano');
