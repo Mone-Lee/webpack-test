@@ -3,8 +3,6 @@ const glob = require('glob');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FriendlyErrorsWebpackPlugin = require('friendly-errors-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const autoprefixer = require('autoprefixer');
 
 const projectRoot = process.cwd();
 
@@ -61,33 +59,6 @@ module.exports = {
         ],
       },
       {
-        test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-        ],
-      },
-      {
-        test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          {
-            loader: 'postcss-loader',
-            options: {
-              postcssOptions: {
-                plugins: [
-                  autoprefixer({
-                    browsers: ['last 2 version', '>1%', 'ios 7'],
-                  }),
-                ],
-              },
-            },
-          },
-          'less-loader',
-        ],
-      },
-      {
         test: /\.(png|jpg|gif|jpeg)$/,
         use: [
           {
@@ -112,9 +83,6 @@ module.exports = {
     ],
   },
   plugins: [
-    new MiniCssExtractPlugin({
-      filename: '[name]_[contenthash:8].css',
-    }),
     new CleanWebpackPlugin(),
     new FriendlyErrorsWebpackPlugin(),
   ].concat(htmlWebpackPlugins),

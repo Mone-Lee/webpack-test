@@ -3,6 +3,8 @@ const glob = require('glob');
 const { merge } = require('webpack-merge');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const autoprefixer = require('autoprefixer');
 const cssnano = require('cssnano');
 const baseConfig = require('./webpack.base');
 
@@ -47,13 +49,47 @@ const { htmlWebpackExternalsPlugins } = setMAPProd();
 
 const prodConfig = {
   mode: 'production',
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+        ],
+      },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  autoprefixer({
+                    browsers: ['last 2 version', '>1%', 'ios 7'],
+                  }),
+                ],
+              },
+            },
+          },
+          'less-loader',
+        ],
+      },
+    ]
+  },
   plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name]_[contenthash:8].css',
+    }),
     new OptimizeCssAssetsPlugin({
       assetNameRegExp: /\.css$/g,
       cssProcessor: cssnano,
     }),
   ]
-    .concat(htmlWebpackExternalsPlugins),
+  .concat(htmlWebpackExternalsPlugins),
   optimization: {
     splitChunks: {
       minSize: 0,
