@@ -18,4 +18,8 @@ module.exports = require('webpack-project-builder/lib/webpack.prod')
 `webapck.ssr.js`  
 ```javascript  
 module.exports = require('webpack-project-builder/lib/webpack.ssr')
-```
+```  
+
+#### Notes  
+webpack-project-builder包只支持**多页面**入口打包，对入口文件路径有要求：  
+入口文件为`/src/**/index.js`文件
