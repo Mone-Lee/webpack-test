@@ -39,14 +39,21 @@ const setMAPProd = () => {
   });
 
   return {
+    entry,
     htmlWebpackExternalsPlugins,
   };
 };
 
-const { htmlWebpackExternalsPlugins } = setMAPProd();
+const { entry, htmlWebpackExternalsPlugins } = setMAPProd();
 
 const ssrConfig = {
   mode: 'production',
+  entry: entry,
+  output: {
+		path: path.join(projectRoot, 'dist'),
+    filename: '[name]-server.js',
+    libraryTarget: 'umd'
+	},
   module: {
     rules: [
       {
@@ -65,7 +72,7 @@ const ssrConfig = {
       cssProcessor: cssnano,
     }),
   ]
-    .concat(htmlWebpackExternalsPlugins),
+  .concat(htmlWebpackExternalsPlugins),
   optimization: {
     splitChunks: {
       minSize: 0,
