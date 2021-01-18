@@ -149,17 +149,17 @@ module.exports = {
 	]
 	.concat(htmlWebpackPlugins)
 	.concat(htmlWebpackExternalsPlugins),
-	optimization: {
-		splitChunks: {
-			minSize: 0,
-			cacheGroups: {
-				commons: {
-					name: 'common',
-					chunks: 'all',
-					minChunks: 2
-				}
-			}
-		}
-	},
+	// optimization: {
+	// 	splitChunks: {
+	// 		minSize: 0,
+	// 		cacheGroups: {
+	// 			commons: {
+	// 				name: 'common',
+	// 				chunks: 'all',
+	// 				minChunks: 2
+	// 			}
+	// 		}
+	// 	}
+	// },
 	devtool: 'inline-source-map'
 }
