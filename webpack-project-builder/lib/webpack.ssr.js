@@ -3,14 +3,14 @@ const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+// const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackExternalsPlugin = require('html-webpack-externals-plugin')
 
 const projectRoot = process.cwd();
 
 const setMPA = () => {
 	const entry = {};
-	const htmlWebpackPlugins = [];
+	// const htmlWebpackPlugins = [];
 	const htmlWebpackExternalsPlugins = [];
 
 	const entryFiles = glob.sync(path.join(projectRoot, './src/*/index-server.js'));
@@ -21,23 +21,25 @@ const setMPA = () => {
 
 		if (pageName) {
 			entry[pageName] = entryFile;
-			htmlWebpackPlugins.push(
-				new HtmlWebpackPlugin({
-					inlineSource: '.css$',
-					template: path.join(projectRoot, `src/${pageName}/index.html`),
-					filename: `${pageName}.html`,
-					chunks: ['vendors', pageName],
-					inject: true,
-					minify: {
-						html5: true,
-						collapseWhitespace: true,
-						preserveLineBreaks: false,
-						minifyCSS: true,
-						minifyJS: true,
-						removeComments: false
-					}
-				})
-			);
+
+			// 注意：ssr环境打包不输出html文件，而是使用webpack.prod.js打包生成的html文件！
+			// htmlWebpackPlugins.push(
+			// 	new HtmlWebpackPlugin({
+			// 		inlineSource: '.css$',
+			// 		template: path.join(projectRoot, `src/${pageName}/index.html`),
+			// 		filename: `${pageName}.html`,
+			// 		chunks: ['vendors', pageName],
+			// 		inject: true,
+			// 		minify: {
+			// 			html5: true,
+			// 			collapseWhitespace: true,
+			// 			preserveLineBreaks: false,
+			// 			minifyCSS: true,
+			// 			minifyJS: true,
+			// 			removeComments: false
+			// 		}
+			// 	})
+			// );
 
 			htmlWebpackExternalsPlugins.push(
         new HtmlWebpackExternalsPlugin({
@@ -61,12 +63,12 @@ const setMPA = () => {
 
 	return {
 		entry,
-		htmlWebpackPlugins,
+		// htmlWebpackPlugins,
 		htmlWebpackExternalsPlugins
 	}
 }
 
-const { entry, htmlWebpackPlugins, htmlWebpackExternalsPlugins } = setMPA();
+const { entry, htmlWebpackExternalsPlugins } = setMPA();
 
 module.exports = {
 	entry: entry,
@@ -143,8 +145,8 @@ module.exports = {
 			assetNameRegExp: /\.css$/g,
 			cssProcessor: require('cssnano')
 		}),
-		new CleanWebpackPlugin(),
+		// new CleanWebpackPlugin(),	// ssr环境打包不清除之前打包生成的文件，因为需要使用生成的html文件和对应的ouput的js文件
 	]
-	.concat(htmlWebpackPlugins)
+	// .concat(htmlWebpackPlugins)
 	.concat(htmlWebpackExternalsPlugins)
 };
