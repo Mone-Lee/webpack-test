@@ -1,6 +1,6 @@
 {
   "name": "webpack-project-builder",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "基本webpack构建项目配置",
   "main": "index.js",
   "repository": {
