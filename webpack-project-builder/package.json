@@ -1,6 +1,6 @@
 {
   "name": "webpack-project-builder",
-  "version": "1.0.15",
+  "version": "1.0.17",
   "description": "基本webpack构建项目配置",
   "main": "index.js",
   "repository": {
@@ -47,6 +47,8 @@
     "raw-loader": "^0.5.1",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
+    "vue-loader": "^15.9.7",
+    "vue-template-compiler": "^2.6.14",
     "webpack": "^4.31.0",
     "webpack-cli": "^3.3.2",
     "webpack-merge": "^5.7.0"
